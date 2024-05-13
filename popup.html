@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chrome Extension</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="popup.css">
+  <script src="jquery-3.6.0.min.js"></script>
+  <script src="popup.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Space+Grotesk:700|Space+Grotesk:400,700&display=swap"
+    rel="stylesheet" />
+
+
+</head>
+<body>
+  <div class="container">
+    <div class="menu">
+      <div class="logo">
+        <p>Prompt Firewall</p>
+      </div>      
+      <button id="home" class="active">Home</button>
+      <button id="settingsButton">Settings</button>
+    </div>
+    <div id="word">
+      <p></p>
+    </div>
+
+    <div id="settingsContent" class="content">
+      <hr> 
+      <label>
+        <input type="checkbox" id="blockCheckbox"> Block Mode <br><br>
+        <p class="note">* Detects Sensitive Information and automatically bring up a warning screen for the user. </p>
+        <input type="checkbox" id="pluginCheckbox"> Plugin Guard (Experimental) <br><br>
+        <p class="note" style="color: red;">* This feature is currently disabled.</p>
+        <p class="note">* Detects different types of injection attacks(direct/indirect prompt injections etc.) using plugin guard.Enable the webpilot plugin for this feature.</p> 
+        <hr>      
+        <input type="checkbox" id="syntheticCheckbox"> Synthetic Data Mode (Experimental) <br><br>
+        <p class="note">* Synthetic data is information that's artificially generated rather than produced by real-world events. e.g. test@example.com -> ATrdnPpS@PSI1ZF.com </p>   
+      </label>
+    </div>
+  </div>
+</body>
+</html>
