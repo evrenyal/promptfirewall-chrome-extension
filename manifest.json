@@ -1,7 +1,7 @@
 {
   "name": "Prompt Firewall: ChatGPT Data Leak Prevention",
   "description": "ChatGPT Data Leak Prevention (DLP) : Safeguard Sensitive Information and Protect Your Privacy",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "permissions": [
     "storage",
     "activeTab"

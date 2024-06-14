@@ -79,7 +79,7 @@ setTimeout(function() {
 
 if (blockStatus === 'enabled') {
   $('#blockCheckbox').prop('checked', true);
-  $('#pluginCheckbox').prop('disabled', false);
+  $('#pluginCheckbox').prop('disabled', true); //plugin disable
   $('#syntheticCheckbox').prop('checked', false);
 } else {
   $('#blockCheckbox').prop('checked', false);
@@ -88,13 +88,13 @@ if (blockStatus === 'enabled') {
   $('#syntheticCheckbox').prop('checked', true);  
 }
 
-if (pluginStatus === 'enabled' && blockStatus === 'enabled') {
+/*if (pluginStatus === 'enabled' && blockStatus === 'enabled') {
   $('#pluginCheckbox').prop('checked', true);
   $('#syntheticCheckbox').prop('checked', false);  
   $('#syntheticCheckbox').prop('disabled', true);
 } else {
   $('#pluginCheckbox').prop('checked', false);
-}
+}*/
 
 
   });
@@ -130,23 +130,23 @@ if (pluginStatus === 'enabled' && blockStatus === 'enabled') {
 
     if ($(this).is(':checked')) {
 
-/*      chrome.storage.sync.set({ pluginStatus: "enabled" }, function() {
+     chrome.storage.sync.set({ pluginStatus: "enabled" }, function() {
 
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           chrome.tabs.sendMessage(tabs[0].id, { action: "reloadPage" });
         });  
 
-      }); */ 
+      }); 
 
     } else {
 
-/*      chrome.storage.sync.set({ pluginStatus: "disabled" }, function() {
+      chrome.storage.sync.set({ pluginStatus: "disabled" }, function() {
 
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
           chrome.tabs.sendMessage(tabs[0].id, { action: "reloadPage" });
         }); 
 
-      }); */
+      }); 
 
     }
 
