@@ -53,6 +53,12 @@ For questions or feedback, please open an issue on GitHub or contact us at evren
 
 Secure your digital presence today with Prompt Firewall!
 
+## References
+
+[https://docs.trellix.com/bundle/data-loss-prevention-11.10.x-classification-definitions-reference-guide/page/GUID-66B1F12A-E267-4EEB-A9A5-A4398A6AF8CD.html](https://docs.trellix.com/bundle/data-loss-prevention-11.10.x-classification-definitions-reference-guide/page/GUID-96141374-4DFC-4FAC-9B27-CDAF2D03005A.html)
+
+[https://learn.microsoft.com/en-us/purview/sit-sensitive-information-type-entity-definitions ](https://learn.microsoft.com/en-us/purview/sit-sensitive-information-type-entity-definitions)
+
 ---
 
 Enhance your digital security and protect your privacy with Prompt Firewall. Download now and take control of your personal information!
