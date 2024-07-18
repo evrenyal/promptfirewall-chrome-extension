@@ -8,29 +8,29 @@ function debug(label, data) {
   }
 }
 
-debug("initDatabase0",null);
+debug("initDatabase0", null);
 
 var db = null;
 
 function initDatabase() {
   var request = indexedDB.open("myDatabase", 3);
 
-  request.onerror = function(event) {
+  request.onerror = function (event) {
     console.error("Database opening error", event.target.error);
   };
 
-  request.onupgradeneeded = function(event) {
+  request.onupgradeneeded = function (event) {
     db = event.target.result;
 
     if (!db.objectStoreNames.contains("items")) {
       var objectStore = db.createObjectStore("items", { keyPath: "id" });
       objectStore.createIndex("count", "count", { unique: false });
-      objectStore.add({ id: 1, count: 0 }); 
+      objectStore.add({ id: 1, count: 0 });
     }
 
   };
 
-  request.onsuccess = function(event) {
+  request.onsuccess = function (event) {
     db = event.target.result;
   };
 }
@@ -43,18 +43,18 @@ function addDataToDatabase(callback) {
 
   var request = objectStore.get(1);
 
-  request.onsuccess = function(event) {
+  request.onsuccess = function (event) {
     var data = event.target.result;
     if (data) {
       data.count += 1;
       var updateRequest = objectStore.put(data);
 
-      updateRequest.onsuccess = function() {
+      updateRequest.onsuccess = function () {
         console.log("Data successfully updated");
         callback(true);
       };
 
-      updateRequest.onerror = function() {
+      updateRequest.onerror = function () {
         console.error("Error updating data");
         callback(false);
       };
@@ -64,36 +64,32 @@ function addDataToDatabase(callback) {
     }
   };
 
-  request.onerror = function(event) {
+  request.onerror = function (event) {
     console.error("Error fetching data", event);
     callback(false);
   };
 }
 
-
 function fetchDataFromDatabase(callback) {
-
   var transaction = db.transaction(["items"], "readonly");
   var objectStore = transaction.objectStore("items");
   var request = objectStore.getAll();
 
-  request.onsuccess = function(event) {
+  request.onsuccess = function (event) {
     var data = event.target.result;
     debug("Data successfully fetched", data);
     callback(data);
-
   };
 
-  request.onerror = function(event) {
+  request.onerror = function (event) {
     debug("Error", event.target.error);
   };
 }
 
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   try {
     if (request.action === "addData") {
-      addDataToDatabase(function(success, error) {
+      addDataToDatabase(function (success, error) {
         if (success) {
           sendResponse({
             message: "Data successfully added"
@@ -105,11 +101,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           });
         }
       });
-      return true; 
+      return true;
 
     } else if (request.action === "fetchData") {
 
-      fetchDataFromDatabase(function(data) {
+      fetchDataFromDatabase(function (data) {
         if (data) {
           sendResponse({
             message: "Data successfully retrieved",
@@ -121,8 +117,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           });
         }
       });
-      return true; 
-    }      
+      return true;
+    }
   } catch (error) {
     debug("Error:", error);
     sendResponse({
@@ -130,3 +126,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     });
   }
 });
+
+

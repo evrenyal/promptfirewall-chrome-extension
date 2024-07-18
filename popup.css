@@ -96,3 +96,78 @@ ul li button {
 .sensitive-data-count {
   font-size: 16px;
 }
+
+#functionsList {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+#functionsList div {
+  margin-bottom: 5px;
+}
+
+/* Toggle switch styles */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+/* Stylish labels */
+.function-label {
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.function {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

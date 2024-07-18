@@ -17,6 +17,8 @@ function debug(label, data) {
 
 window.onload = function() {
 
+
+
     if (localStorage.getItem('reloaded') === 'true') {
 
         const popup = document.createElement('div');
@@ -1145,6 +1147,155 @@ function generateUniqueRandomUSZipCode() {
     return zip;
 }
 
+// China Taxpayer Identification Number
+function generateUniqueRandomChinaTIN() {
+    return Math.floor(100000000000000000 + Math.random() * 900000000000000000).toString();
+}
+
+//Japan SSN
+function generateUniqueRandomJapanSSN() {
+    function getRandomSixDigits() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    const part1 = getRandomSixDigits();
+    const part2 = getRandomSixDigits();
+
+    return `${part1}${part2}`;
+}
+
+
+// Korea Resident Registration Number
+function generateUniqueRandomKoreaRRN() {
+    const part1 = Math.floor(100000 + Math.random() * 900000).toString();
+    const part2 = Math.floor(1000000 + Math.random() * 9000000).toString();
+    return `${part1}${part2}`;
+}
+
+// New Zealand IRD
+function generateUniqueRandomIRD() {
+    function getRandomThreeDigits() {
+        return Math.floor(100 + Math.random() * 900).toString().padStart(3, '0');
+    }
+
+    const part1 = getRandomThreeDigits();
+    const part2 = getRandomThreeDigits();
+    const part3 = getRandomThreeDigits();
+
+    return `${part1}-${part2}-${part3}`;
+}
+
+
+// Philippines SSS
+function generateUniqueRandomSSS() {
+    function getRandomTwoDigits() {
+        return Math.floor(10 + Math.random() * 90).toString();
+    }
+
+    function getRandomSevenDigits() {
+        return Math.floor(1000000 + Math.random() * 9000000).toString();
+    }
+
+    function getRandomOneDigit() {
+        return Math.floor(1 + Math.random() * 9).toString();
+    }
+
+    const part1 = getRandomTwoDigits();
+    const part2 = getRandomSevenDigits();
+    const part3 = getRandomOneDigit();
+
+    return `${part1}-${part2}-${part3}`;
+}
+
+// Belgium INSZ/NISS
+function generateUniqueRandomINSZ() {
+    function getRandomDigits(count) {
+        const factor = Math.pow(10, count - 1);
+        return Math.floor(factor + Math.random() * 9 * factor).toString().padStart(count, '0');
+    }
+
+    const part1 = getRandomDigits(6);
+    const part2 = getRandomDigits(5);
+
+    return `${part1}${part2}`;
+}
+
+
+// Germany Steuer-Identnummer
+function generateUniqueRandomStNr() {
+    return Math.floor(10000000000 + Math.random() * 90000000000).toString();
+}
+
+// France NIR
+function generateUniqueRandomNIR() {
+    function getRandomThirteenDigits() {
+        return Math.floor(1000000000000 + Math.random() * 9000000000000).toString();
+    }
+
+    function getRandomTwoDigits() {
+        return Math.floor(10 + Math.random() * 90).toString().padStart(2, '0');
+    }
+
+    const part1 = getRandomThirteenDigits();
+    const part2 = getRandomTwoDigits();
+
+    return `${part1}-${part2}`;
+}
+
+// Italy Codice Fiscale
+function generateUniqueRandomCodiceFiscale() {
+    function getRandomThreeDigits() {
+        return Math.floor(100 + Math.random() * 900).toString();
+    }
+
+    const part1 = getRandomThreeDigits();
+    const part2 = getRandomThreeDigits();
+    const part3 = getRandomThreeDigits();
+    const part4 = getRandomThreeDigits();
+
+    return `${part1}–${part2}–${part3}–${part4}`;
+}
+
+// Netherlands BSN
+function generateUniqueRandomBSN() {
+    return `${Math.floor(100000000 + Math.random() * 900000000)}`;
+}
+
+// Portugal NISS
+function generateUniqueRandomNISS() {
+    return Math.floor(10000000000 + Math.random() * 90000000000).toString();
+}
+
+// Russia INN
+function generateUniqueRandomINN() {
+    const firstNineDigits = Math.floor(100000000 + Math.random() * 900000000).toString().padStart(9, '0');
+    const checksum = Math.floor(10 + Math.random() * 90).toString().padStart(2, '0');
+    const separator = Math.random() > 0.5 ? ' ' : '-';
+    return `${firstNineDigits.substring(0, 3)}-${firstNineDigits.substring(3, 6)}-${firstNineDigits.substring(6, 9)}${separator}${checksum}`;
+}
+
+// Spain NUSS
+function generateUniqueRandomNUSS() {
+    let nuss = '';
+    while (nuss.length < 12) {
+        nuss += Math.floor(Math.random() * 10).toString();
+    }
+    return nuss;
+}
+
+// Ukraine INPP
+function generateUniqueRandomINPP() {
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+}
+
+// Brazil CPF
+function generateUniqueRandomCPF() {
+    function getRandomDigit() {
+        return Math.floor(Math.random() * 10).toString();
+    }
+
+    return `${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}.${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}.${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}-${getRandomDigit()}${getRandomDigit()}`;
+}
 
 debug("Random Credit Card Number:", generateUniqueRandomCreditCard());
 debug("Random Crypto Address:", generateUniqueRandomCryptoAddress());
@@ -1212,6 +1363,21 @@ debug("Random US SSN Randomization:", generateUniqueRandomUSSSNRandomization());
 debug("Random US VIN:", generateUniqueRandomUSVIN());
 debug("Random US Zip Code:", generateUniqueRandomUSZipCode());
 
+debug("Random China TIN:", generateUniqueRandomChinaTIN());
+debug("Random Japan SSN:", generateUniqueRandomJapanSSN());
+debug("Random Korea RRN:", generateUniqueRandomKoreaRRN());
+debug("Random New Zealand IRD:", generateUniqueRandomIRD());
+debug("Random Philippines SSS:", generateUniqueRandomSSS());
+debug("Random Belgium INSZ:", generateUniqueRandomINSZ());
+debug("Random Germany StNr:", generateUniqueRandomStNr());
+debug("Random France NIR:", generateUniqueRandomNIR());
+debug("Random Italy Codice Fiscale:", generateUniqueRandomCodiceFiscale());
+debug("Random Netherlands BSN:", generateUniqueRandomBSN());
+debug("Random Portugal NISS:", generateUniqueRandomNISS());
+debug("Random Russia INN:", generateUniqueRandomINN());
+debug("Random Spain NUSS:", generateUniqueRandomNUSS());
+debug("Random Ukraine INPP:", generateUniqueRandomINPP());
+debug("Random Brazil CPF:", generateUniqueRandomCPF());
 
 function matchCreditCardNumbers(text) {
     const regex = /\b(?:\d{4}[ -]?){3}(?=\d{4}\b)(?:\d{4})|3[47][0-9]{2}([ -]?)([0-9]{6}\1[0-9]{5})\b/g;
@@ -1837,6 +2003,97 @@ function matchUSZipCode(text) {
     return text.match(regex);
 }
 
+// China TIN
+function matchChinaTIN(text) {
+    const regex = /\b\d{18}\b/g;
+    return text.match(regex);
+}
+
+// Japan SSN
+function matchJapanSSN(text) {
+    const regex = /\b\d{12}\b/g;
+    return text.match(regex);
+}
+
+// Korea RRN
+function matchKoreaRRN(text) {
+    const regex = /\b\d{13}\b/g;
+    return text.match(regex);
+}
+
+// New Zealand IRD
+function matchIRD(text) {
+    const regex = /\b\d{3}-\d{3}-\d{3}\b/g;
+    return text.match(regex);
+}
+
+
+// Philippines SSS
+function matchSSS(text) {
+    const regex = /\b\d{2}-\d{7}-\d{1}\b/g;
+    return text.match(regex);
+}
+
+// Belgium INSZ/NISS
+function matchINSZ(text) {
+    const regex = /\b\d{11}\b/g;
+    return text.match(regex);
+}
+
+// Germany StNr
+function matchStNr(text) {
+    const regex = /\b\d{11}\b/g;
+    return text.match(regex);
+}
+
+// France NIR
+function matchNIR(text) {
+    const regex = /\b\d{13}-\d{2}\b/g;
+    return text.match(regex);
+}
+
+// Italy Codice Fiscale
+function matchCodiceFiscale(text) {
+    const regex = /\b\d{3}–\d{3}–\d{3}–\d{3}\b/g;
+    return text.match(regex);
+}
+
+// Netherlands BSN
+function matchBSN(text) {
+    const regex = /\b\d{9}\b/g;
+    return text.match(regex);
+}
+
+
+// Portugal NISS
+function matchNISS(text) {
+    const regex = /\b\d{11}\b/g;
+    return text.match(regex);
+}
+
+// Russia INN
+function matchINN(text) {
+    const regex = /\b\d{3}-\d{3}-\d{3}[- ]\d{2}\b/g;
+    return text.match(regex);
+}
+
+// Spain NUSS
+function matchNUSS(text) {
+    const regex = /\b(\d\s*){12}\b/g;
+    return text.match(regex);
+}
+
+// Ukraine INPP
+function matchINPP(text) {
+    const regex = /\b\d{10}\b/g;
+    return text.match(regex);
+}
+
+// Brazil CPF
+function matchCPF(text) {
+    const regex = /\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/g;
+    return text.match(regex);
+}
 
 function matchMarkdown(text) {
     const regex = /!\[.*?\]\(.*?\)/gm;
@@ -1845,7 +2102,6 @@ function matchMarkdown(text) {
 
     return matches;
 }
-
 
 function matchClosest(text) {
     const targets = [
@@ -2223,6 +2479,36 @@ function startInterval() {
                     const matchUSZipCodeStr = safeMatch(matchUSZipCode, lastPart);
                     debug("matchUSZipCodeStr", matchUSZipCodeStr);
 
+                    const matchChinaTINStr = safeMatch(matchChinaTIN, lastPart);
+                    debug("matchChinaTINStr", matchChinaTINStr);
+                    const matchJapanSSNStr = safeMatch(matchJapanSSN, lastPart);
+                    debug("matchJapanSSNStr", matchJapanSSNStr);
+                    const matchKoreaRRNStr = safeMatch(matchKoreaRRN, lastPart);
+                    debug("matchKoreaRRNStr", matchKoreaRRNStr);
+                    const matchIRDStr = safeMatch(matchIRD, lastPart);
+                    debug("matchIRDStr", matchIRDStr);
+                    const matchSSSStr = safeMatch(matchSSS, lastPart);
+                    debug("matchSSSStr", matchSSSStr);
+                    const matchINSZStr = safeMatch(matchINSZ, lastPart);
+                    debug("matchINSZStr", matchINSZStr);
+                    const matchStNrStr = safeMatch(matchStNr, lastPart);
+                    debug("matchStNrStr", matchStNrStr);
+                    const matchNIRStr = safeMatch(matchNIR, lastPart);
+                    debug("matchNIRStr", matchNIRStr);
+                    const matchCodiceFiscaleStr = safeMatch(matchCodiceFiscale, lastPart);
+                    debug("matchCodiceFiscaleStr", matchCodiceFiscaleStr);
+                    const matchBSNStr = safeMatch(matchBSN, lastPart);
+                    debug("matchBSNStr", matchBSNStr);
+                    const matchNISSStr = safeMatch(matchNISS, lastPart);
+                    debug("matchNISSStr", matchNISSStr);
+                    const matchINNStr = safeMatch(matchINN, lastPart);
+                    debug("matchINNStr", matchINNStr);
+                    const matchNUSSStr = safeMatch(matchNUSS, lastPart);
+                    debug("matchNUSSStr", matchNUSSStr);
+                    const matchINPPStr = safeMatch(matchINPP, lastPart);
+                    debug("matchINPPStr", matchINPPStr);
+                    const matchCPFStr = safeMatch(matchCPF, lastPart);
+                    debug("matchCPFStr", matchCPFStr);
 
                     let cnt = ((matchPhoneNumbersStr && matchPhoneNumbersStr.length > 0) ? matchPhoneNumbersStr.length : 0) +
                         ((matchCryptoAddressesStr && matchCryptoAddressesStr.length > 0) ? matchCryptoAddressesStr.length : 0) +
@@ -2290,16 +2576,28 @@ function startInterval() {
                         ((matchUSSSNStr && matchUSSSNStr.length > 0) ? matchUSSSNStr.length : 0) +
                         ((matchUSSSNRandomizationStr && matchUSSSNRandomizationStr.length > 0) ? matchUSSSNRandomizationStr.length : 0) +
                         ((matchUSVINStr && matchUSVINStr.length > 0) ? matchUSVINStr.length : 0) +
-                        ((matchUSZipCodeStr && matchUSZipCodeStr.length > 0) ? matchUSZipCodeStr.length : 0);
-
+                        ((matchUSZipCodeStr && matchUSZipCodeStr.length > 0) ? matchUSZipCodeStr.length : 0) +
+                        ((matchChinaTINStr && matchChinaTINStr.length > 0) ? matchChinaTINStr.length : 0) +
+                        ((matchJapanSSNStr && matchJapanSSNStr.length > 0) ? matchJapanSSNStr.length : 0) +
+                        ((matchKoreaRRNStr && matchKoreaRRNStr.length > 0) ? matchKoreaRRNStr.length : 0) +
+                        ((matchIRDStr && matchIRDStr.length > 0) ? matchIRDStr.length : 0) +
+                        ((matchSSSStr && matchSSSStr.length > 0) ? matchSSSStr.length : 0) +
+                        ((matchINSZStr && matchINSZStr.length > 0) ? matchINSZStr.length : 0) +
+                        ((matchStNrStr && matchStNrStr.length > 0) ? matchStNrStr.length : 0) +
+                        ((matchNIRStr && matchNIRStr.length > 0) ? matchNIRStr.length : 0) +
+                        ((matchCodiceFiscaleStr && matchCodiceFiscaleStr.length > 0) ? matchCodiceFiscaleStr.length : 0) +
+                        ((matchBSNStr && matchBSNStr.length > 0) ? matchBSNStr.length : 0) +
+                        ((matchNISSStr && matchNISSStr.length > 0) ? matchNISSStr.length : 0) +
+                        ((matchINNStr && matchINNStr.length > 0) ? matchINNStr.length : 0) +
+                        ((matchNUSSStr && matchNUSSStr.length > 0) ? matchNUSSStr.length : 0) +
+                        ((matchINPPStr && matchINPPStr.length > 0) ? matchINPPStr.length : 0) +
+                        ((matchCPFStr && matchCPFStr.length > 0) ? matchCPFStr.length : 0);
 
                     debug("cnt", cnt);
                     sendMultipleRequests(cnt, 10000);
 
-
-
                     const handleMatches = (matches, blockMode, generateFunction, maskFunction, typeLabel) => {
-                        console.log("matched", matches);
+                        debug("matched", matches);
                         if (!matches) return;
 
                         let maskedStringArr = [];
@@ -2312,10 +2610,10 @@ function startInterval() {
                                 return maskedString;
                             });
 
-                            console.log(`${typeLabel} matchedWords`, matchedWords);
+                            debug(`${typeLabel} matchedWords`, matchedWords);
                             const _mString = maskedStringArr.join(", ");
                             const _tmptype = `<span style='color:darkgrey; font-weight:bold;'>${typeLabel} :</span> ${_mString}`;
-                            console.log("_tmptype", _tmptype);
+                            debug("_tmptype", _tmptype);
                             matchedWordsx.push(_tmptype);
                             showPopup(event, matchedWordsx);
 
@@ -2330,71 +2628,437 @@ function startInterval() {
                         textarea.value += " ";
                     };
 
-                    handleMatches(matchPhoneNumbersStr, blockMode, generateUniqueRandomPhoneNumber, maskString, "Phone Number");
-                    handleMatches(matchCreditCardNumbersStr, blockMode, generateUniqueRandomCreditCard, maskString, "Credit Card Number");
-                    handleMatches(matchCryptoAddressesStr, blockMode, generateUniqueRandomCryptoAddress, maskString, "Crypto Addresses");
-                    handleMatches(matchEmailAddressesStr, blockMode, generateUniqueRandomEmail, maskStringEmail, "Email Address");
-                    handleMatches(matchIBANCodesStr, blockMode, generateUniqueRandomIBAN, maskString, "IBAN Codes");
-                    handleMatches(matchIPAddressesStr, blockMode, generateUniqueRandomIPAddress, maskString, "IP Addresses");
+                    function getEnabledFunctions() {
+                        return new Promise((resolve, reject) => {
+                            chrome.storage.sync.get(['enabledFunctions'], function(result) {
+                                if (chrome.runtime.lastError) {
+                                    reject(chrome.runtime.lastError);
+                                } else {
+                                    console.log('Retrieved enabled functions:', result.enabledFunctions);
+                                    resolve(result.enabledFunctions);
+                                }
+                            });
+                        });
+                    }
 
-                    handleMatches(matchABARTNStr, blockMode, generateUniqueRandomABARTN, maskString, "ABA RTN");
-                    handleMatches(matchAustralianBusinessNumberStr, blockMode, generateUniqueRandomAustralianBusinessNumber, maskString, "Australian Business Number");
-                    handleMatches(matchAustralianCompanyNumberStr, blockMode, generateUniqueRandomAustralianCompanyNumber, maskString, "Australian Company Number");
-                    handleMatches(matchAustralianDriversLicenseStr, blockMode, generateUniqueRandomAustralianDriversLicense, maskString, "Australian Drivers License");
-                    handleMatches(matchAustralianFullNationalNumberStr, blockMode, generateUniqueRandomAustralianFullNationalNumber, maskString, "Australian Full National Number (FNN)");
-                    handleMatches(matchAustralianMedicareCardNumberStr, blockMode, generateUniqueRandomAustralianMedicareCardNumber, maskString, "Australian Medicare card number");
-                    handleMatches(matchAustralianNSWDriversLicenseStr, blockMode, generateUniqueRandomAustralianNSWDriversLicense, maskString, "Australian NSW Drivers License Pattern");
-                    handleMatches(matchAustralianQLDDriversLicenseStr, blockMode, generateUniqueRandomAustralianQLDDriversLicense, maskString, "Australian Queensland Drivers License Pattern");
-                    handleMatches(matchAustralianTaxFileNumberStr, blockMode, generateUniqueRandomAustralianTaxFileNumber, maskString, "Australian Tax File Number");
-                    handleMatches(matchAustrianBankAccountNumbersStr, blockMode, generateUniqueRandomAustrianBankAccountNumbers, maskString, "Austrian Bank Account Numbers");
-                    handleMatches(matchAustrianPassportNumberStr, blockMode, generateUniqueRandomAustrianPassportNumber, maskString, "Austrian Passport Number");
-                    handleMatches(matchAustrianSocialSecurityInsuranceNumberStr, blockMode, generateUniqueRandomAustrianSocialSecurityInsuranceNumber, maskString, "Austrian Social Security Insurance Number");
-                    handleMatches(matchAustrianVATNumberStr, blockMode, generateUniqueRandomAustrianVATNumber, maskString, "Austrian VAT Identification Number (UID)");
-                    handleMatches(matchCanadianAlbertaDriversLicenseStr, blockMode, generateUniqueRandomCanadianAlbertaDriversLicense, maskString, "Canadian Alberta Drivers License Pattern");
-                    handleMatches(matchCanadianAlbertaHealthStr, blockMode, generateUniqueRandomCanadianAlbertaHealth, maskString, "Canadian Alberta Health Pattern");
-                    handleMatches(matchCanadianManitobaDriversLicenseStr, blockMode, generateUniqueRandomCanadianManitobaDriversLicense, maskString, "Canadian Manitoba Drivers License Pattern");
-                    handleMatches(matchCanadianManitobaHealthStr, blockMode, generateUniqueRandomCanadianManitobaHealth, maskString, "Canadian Manitoba Health Pattern");
-                    handleMatches(matchCanadianOntarioDriversLicenseStr, blockMode, generateUniqueRandomCanadianOntarioDriversLicense, maskString, "Canadian Ontario Drivers License Pattern");
-                    handleMatches(matchCanadianOntarioHealthStr, blockMode, generateUniqueRandomCanadianOntarioHealth, maskString, "Canadian Ontario Health Pattern");
-                    handleMatches(matchCanadianPassportStr, blockMode, generateUniqueRandomCanadianPassport, maskString, "Canadian Passport Pattern");
-                    handleMatches(matchCanadianQuebecDriversLicenseStr, blockMode, generateUniqueRandomCanadianQuebecDriversLicense, maskString, "Canadian Quebec Drivers License Pattern");
-                    handleMatches(matchCanadianQuebecHealthStr, blockMode, generateUniqueRandomCanadianQuebecHealth, maskString, "Canadian Quebec Health Pattern");
-                    handleMatches(matchCanadianSaskatchewanDriversLicenseStr, blockMode, generateUniqueRandomCanadianSaskatchewanDriversLicense, maskString, "Canadian Saskatchewan Drivers License Pattern");
-                    handleMatches(matchCanadianSocialInsuranceNumberStr, blockMode, generateUniqueRandomCanadianSocialInsuranceNumber, maskString, "Canadian Social Insurance Number");
-                    handleMatches(matchDateFormatsStr, blockMode, generateUniqueRandomDateFormats, maskString, "Date (Multiple Formats)");
-                    handleMatches(matchFranceDriversLicenseNumberStr, blockMode, generateUniqueRandomFranceDriversLicenseNumber, maskString, "France Drivers License Number");
-                    handleMatches(matchFrancePassportNumberStr, blockMode, generateUniqueRandomFrancePassportNumber, maskString, "France Passport Number");
-                    handleMatches(matchFranceVATNumberStr, blockMode, generateUniqueRandomFranceVATNumber, maskString, "France Value Added Tax (VAT) Number");
-                    handleMatches(matchFrenchINSEECodeStr, blockMode, generateUniqueRandomFrenchINSEECode, maskString, "French INSEE Code");
-                    handleMatches(matchGermanDriversLicenseNumberStr, blockMode, generateUniqueRandomGermanDriversLicenseNumber, maskString, "German Driver's License Number");
-                    handleMatches(matchGermanIDNumberStr, blockMode, generateUniqueRandomGermanIDNumber, maskString, "German ID Number");
-                    handleMatches(matchGermanPassportNumberStr, blockMode, generateUniqueRandomGermanPassportNumber, maskString, "German Passport Number");
-                    handleMatches(matchGermanSocialSecurityNumberStr, blockMode, generateUniqueRandomGermanSocialSecurityNumber, maskString, "German Social Security Number");
-                    handleMatches(matchGermanTaxIdentifierStr, blockMode, generateUniqueRandomGermanTaxIdentifier, maskString, "German Tax Identifier/Code");
-                    handleMatches(matchIndianAadhaarNumberStr, blockMode, generateUniqueRandomIndianAadhaarNumber, maskString, "Indian Aadhaar Number");
-                    handleMatches(matchIndianPANStr, blockMode, generateUniqueRandomIndianPAN, maskString, "Indian PAN");
-                    handleMatches(matchItalianPassportNumberStr, blockMode, generateUniqueRandomItalianPassportNumber, maskString, "Italian Passport Number");
-                    handleMatches(matchItalianTaxIDStr, blockMode, generateUniqueRandomItalianTaxID, maskString, "Italian Tax ID/SSN (Codice Fiscale)");
-                    handleMatches(matchTurkishIDStr, blockMode, generateUniqueRandomTurkishID, maskString, "Turkish Identification Number");
-                    handleMatches(matchUKBICNumberStr, blockMode, generateUniqueRandomUKBICNumber, maskString, "UK BIC Number");
-                    handleMatches(matchUKDriverLicenseNumberStr, blockMode, generateUniqueRandomUKDriverLicenseNumber, maskString, "UK Driver License Number");
-                    handleMatches(matchUKElectoralRollNumberStr, blockMode, generateUniqueRandomUKElectoralRollNumber, maskString, "UK Electoral Roll Number");
-                    handleMatches(matchUKIBANNumberStr, blockMode, generateUniqueRandomUKIBANNumber, maskString, "UK IBAN Number");
-                    handleMatches(matchUKNHSNumberStr, blockMode, generateUniqueRandomUKNHSNumber, maskString, "UK National Health Service (NHS) Number");
-                    handleMatches(matchUKNationalInsuranceNumberStr, blockMode, generateUniqueRandomUKNationalInsuranceNumber, maskString, "UK National Insurance Number");
-                    handleMatches(matchUKPassportNumberStr, blockMode, generateUniqueRandomUKPassportNumber, maskString, "UK Passport Number");
-                    handleMatches(matchUKPostcodeStr, blockMode, generateUniqueRandomUKPostcode, maskString, "UK Postcode");
-                    handleMatches(matchUKSEDOLStr, blockMode, generateUniqueRandomUKSEDOL, maskString, "UK SEDOL");
-                    handleMatches(matchUKSortCodeStr, blockMode, generateUniqueRandomUKSortCode, maskString, "UK Sort Code");
-                    handleMatches(matchUKUTRStr, blockMode, generateUniqueRandomUKUTR, maskString, "UK Unique Taxpayer Reference (UTR)");
-                    handleMatches(matchUSDriverLicenseNumberStr, blockMode, generateUniqueRandomUSDriverLicenseNumber, maskString, "US Driver License Number");
-                    handleMatches(matchUSITINStr, blockMode, generateUniqueRandomUSITIN, maskString, "US Individual Taxpayer Identification Number (ITIN)");
-                    handleMatches(matchUSMedicareHICNumberStr, blockMode, generateUniqueRandomUSMedicareHICNumber, maskString, "US Medicare Health Insurance Claim (HIC) Number");
-                    handleMatches(matchUSPassportNumberStr, blockMode, generateUniqueRandomUSPassportNumber, maskString, "US Passport Number");
-                    handleMatches(matchUSSSNStr, blockMode, generateUniqueRandomUSSSN, maskString, "US Social Security Number (SSN)");
-                    handleMatches(matchUSSSNRandomizationStr, blockMode, generateUniqueRandomUSSSNRandomization, maskString, "US Social Security Number Randomization");
-                    handleMatches(matchUSVINStr, blockMode, generateUniqueRandomUSVIN, maskString, "US Vehicle Identification Number (VIN)");
-                    handleMatches(matchUSZipCodeStr, blockMode, generateUniqueRandomUSZipCode, maskString, "US Zip Code");
+
+                    getEnabledFunctions()
+                        .then(enabledFunctions => {
+                            console.log('Enabled functions:', enabledFunctions);
+
+                            const functionMapping = {
+                                'Phone Number': {
+                                    matchStr: matchPhoneNumbersStr,
+                                    generator: generateUniqueRandomPhoneNumber,
+                                    mask: maskString
+                                },
+                                'Credit Card Number': {
+                                    matchStr: matchCreditCardNumbersStr,
+                                    generator: generateUniqueRandomCreditCard,
+                                    mask: maskString
+                                },
+                                'Crypto Addresses': {
+                                    matchStr: matchCryptoAddressesStr,
+                                    generator: generateUniqueRandomCryptoAddress,
+                                    mask: maskString
+                                },
+                                'Email Address': {
+                                    matchStr: matchEmailAddressesStr,
+                                    generator: generateUniqueRandomEmail,
+                                    mask: maskStringEmail
+                                },
+                                'IBAN Codes': {
+                                    matchStr: matchIBANCodesStr,
+                                    generator: generateUniqueRandomIBAN,
+                                    mask: maskString
+                                },
+                                'IP Addresses': {
+                                    matchStr: matchIPAddressesStr,
+                                    generator: generateUniqueRandomIPAddress,
+                                    mask: maskString
+                                },
+                                'ABA RTN': {
+                                    matchStr: matchABARTNStr,
+                                    generator: generateUniqueRandomABARTN,
+                                    mask: maskString
+                                },
+                                'Australian Business Number': {
+                                    matchStr: matchAustralianBusinessNumberStr,
+                                    generator: generateUniqueRandomAustralianBusinessNumber,
+                                    mask: maskString
+                                },
+                                'Australian Company Number': {
+                                    matchStr: matchAustralianCompanyNumberStr,
+                                    generator: generateUniqueRandomAustralianCompanyNumber,
+                                    mask: maskString
+                                },
+                                'Australian Drivers License': {
+                                    matchStr: matchAustralianDriversLicenseStr,
+                                    generator: generateUniqueRandomAustralianDriversLicense,
+                                    mask: maskString
+                                },
+                                'Australian Full National Number (FNN)': {
+                                    matchStr: matchAustralianFullNationalNumberStr,
+                                    generator: generateUniqueRandomAustralianFullNationalNumber,
+                                    mask: maskString
+                                },
+                                'Australian Medicare card number': {
+                                    matchStr: matchAustralianMedicareCardNumberStr,
+                                    generator: generateUniqueRandomAustralianMedicareCardNumber,
+                                    mask: maskString
+                                },
+                                'Australian NSW Drivers License Pattern': {
+                                    matchStr: matchAustralianNSWDriversLicenseStr,
+                                    generator: generateUniqueRandomAustralianNSWDriversLicense,
+                                    mask: maskString
+                                },
+                                'Australian Queensland Drivers License Pattern': {
+                                    matchStr: matchAustralianQLDDriversLicenseStr,
+                                    generator: generateUniqueRandomAustralianQLDDriversLicense,
+                                    mask: maskString
+                                },
+                                'Australian Tax File Number': {
+                                    matchStr: matchAustralianTaxFileNumberStr,
+                                    generator: generateUniqueRandomAustralianTaxFileNumber,
+                                    mask: maskString
+                                },
+                                'Austrian Bank Account Numbers': {
+                                    matchStr: matchAustrianBankAccountNumbersStr,
+                                    generator: generateUniqueRandomAustrianBankAccountNumbers,
+                                    mask: maskString
+                                },
+                                'Austrian Passport Number': {
+                                    matchStr: matchAustrianPassportNumberStr,
+                                    generator: generateUniqueRandomAustrianPassportNumber,
+                                    mask: maskString
+                                },
+                                'Austrian Social Security Insurance Number': {
+                                    matchStr: matchAustrianSocialSecurityInsuranceNumberStr,
+                                    generator: generateUniqueRandomAustrianSocialSecurityInsuranceNumber,
+                                    mask: maskString
+                                },
+                                'Austrian VAT Identification Number (UID)': {
+                                    matchStr: matchAustrianVATNumberStr,
+                                    generator: generateUniqueRandomAustrianVATNumber,
+                                    mask: maskString
+                                },
+                                'Canadian Alberta Drivers License Pattern': {
+                                    matchStr: matchCanadianAlbertaDriversLicenseStr,
+                                    generator: generateUniqueRandomCanadianAlbertaDriversLicense,
+                                    mask: maskString
+                                },
+                                'Canadian Alberta Health Pattern': {
+                                    matchStr: matchCanadianAlbertaHealthStr,
+                                    generator: generateUniqueRandomCanadianAlbertaHealth,
+                                    mask: maskString
+                                },
+                                'Canadian Manitoba Drivers License Pattern': {
+                                    matchStr: matchCanadianManitobaDriversLicenseStr,
+                                    generator: generateUniqueRandomCanadianManitobaDriversLicense,
+                                    mask: maskString
+                                },
+                                'Canadian Manitoba Health Pattern': {
+                                    matchStr: matchCanadianManitobaHealthStr,
+                                    generator: generateUniqueRandomCanadianManitobaHealth,
+                                    mask: maskString
+                                },
+                                'Canadian Ontario Drivers License Pattern': {
+                                    matchStr: matchCanadianOntarioDriversLicenseStr,
+                                    generator: generateUniqueRandomCanadianOntarioDriversLicense,
+                                    mask: maskString
+                                },
+                                'Canadian Ontario Health Pattern': {
+                                    matchStr: matchCanadianOntarioHealthStr,
+                                    generator: generateUniqueRandomCanadianOntarioHealth,
+                                    mask: maskString
+                                },
+                                'Canadian Passport Pattern': {
+                                    matchStr: matchCanadianPassportStr,
+                                    generator: generateUniqueRandomCanadianPassport,
+                                    mask: maskString
+                                },
+                                'Canadian Quebec Drivers License Pattern': {
+                                    matchStr: matchCanadianQuebecDriversLicenseStr,
+                                    generator: generateUniqueRandomCanadianQuebecDriversLicense,
+                                    mask: maskString
+                                },
+                                'Canadian Quebec Health Pattern': {
+                                    matchStr: matchCanadianQuebecHealthStr,
+                                    generator: generateUniqueRandomCanadianQuebecHealth,
+                                    mask: maskString
+                                },
+                                'Canadian Saskatchewan Drivers License Pattern': {
+                                    matchStr: matchCanadianSaskatchewanDriversLicenseStr,
+                                    generator: generateUniqueRandomCanadianSaskatchewanDriversLicense,
+                                    mask: maskString
+                                },
+                                'Canadian Social Insurance Number': {
+                                    matchStr: matchCanadianSocialInsuranceNumberStr,
+                                    generator: generateUniqueRandomCanadianSocialInsuranceNumber,
+                                    mask: maskString
+                                },
+                                'Date (Multiple Formats)': {
+                                    matchStr: matchDateFormatsStr,
+                                    generator: generateUniqueRandomDateFormats,
+                                    mask: maskString
+                                },
+                                'France Drivers License Number': {
+                                    matchStr: matchFranceDriversLicenseNumberStr,
+                                    generator: generateUniqueRandomFranceDriversLicenseNumber,
+                                    mask: maskString
+                                },
+                                'France Passport Number': {
+                                    matchStr: matchFrancePassportNumberStr,
+                                    generator: generateUniqueRandomFrancePassportNumber,
+                                    mask: maskString
+                                },
+                                'France Value Added Tax (VAT) Number': {
+                                    matchStr: matchFranceVATNumberStr,
+                                    generator: generateUniqueRandomFranceVATNumber,
+                                    mask: maskString
+                                },
+                                'French INSEE Code': {
+                                    matchStr: matchFrenchINSEECodeStr,
+                                    generator: generateUniqueRandomFrenchINSEECode,
+                                    mask: maskString
+                                },
+                                'German Driver\'s License Number': {
+                                    matchStr: matchGermanDriversLicenseNumberStr,
+                                    generator: generateUniqueRandomGermanDriversLicenseNumber,
+                                    mask: maskString
+                                },
+                                'German ID Number': {
+                                    matchStr: matchGermanIDNumberStr,
+                                    generator: generateUniqueRandomGermanIDNumber,
+                                    mask: maskString
+                                },
+                                'German Passport Number': {
+                                    matchStr: matchGermanPassportNumberStr,
+                                    generator: generateUniqueRandomGermanPassportNumber,
+                                    mask: maskString
+                                },
+                                'German Social Security Number': {
+                                    matchStr: matchGermanSocialSecurityNumberStr,
+                                    generator: generateUniqueRandomGermanSocialSecurityNumber,
+                                    mask: maskString
+                                },
+                                'German Tax Identifier/Code': {
+                                    matchStr: matchGermanTaxIdentifierStr,
+                                    generator: generateUniqueRandomGermanTaxIdentifier,
+                                    mask: maskString
+                                },
+                                'Indian Aadhaar Number': {
+                                    matchStr: matchIndianAadhaarNumberStr,
+                                    generator: generateUniqueRandomIndianAadhaarNumber,
+                                    mask: maskString
+                                },
+                                'Indian PAN': {
+                                    matchStr: matchIndianPANStr,
+                                    generator: generateUniqueRandomIndianPAN,
+                                    mask: maskString
+                                },
+                                'Italian Passport Number': {
+                                    matchStr: matchItalianPassportNumberStr,
+                                    generator: generateUniqueRandomItalianPassportNumber,
+                                    mask: maskString
+                                },
+                                'Italian Tax ID/SSN (Codice Fiscale)': {
+                                    matchStr: matchItalianTaxIDStr,
+                                    generator: generateUniqueRandomItalianTaxID,
+                                    mask: maskString
+                                },
+                                'Turkish Identification Number': {
+                                    matchStr: matchTurkishIDStr,
+                                    generator: generateUniqueRandomTurkishID,
+                                    mask: maskString
+                                },
+                                'UK BIC Number': {
+                                    matchStr: matchUKBICNumberStr,
+                                    generator: generateUniqueRandomUKBICNumber,
+                                    mask: maskString
+                                },
+                                'UK Driver License Number': {
+                                    matchStr: matchUKDriverLicenseNumberStr,
+                                    generator: generateUniqueRandomUKDriverLicenseNumber,
+                                    mask: maskString
+                                },
+                                'UK Electoral Roll Number': {
+                                    matchStr: matchUKElectoralRollNumberStr,
+                                    generator: generateUniqueRandomUKElectoralRollNumber,
+                                    mask: maskString
+                                },
+                                'UK IBAN Number': {
+                                    matchStr: matchUKIBANNumberStr,
+                                    generator: generateUniqueRandomUKIBANNumber,
+                                    mask: maskString
+                                },
+                                'UK National Health Service (NHS) Number': {
+                                    matchStr: matchUKNHSNumberStr,
+                                    generator: generateUniqueRandomUKNHSNumber,
+                                    mask: maskString
+                                },
+                                'UK National Insurance Number': {
+                                    matchStr: matchUKNationalInsuranceNumberStr,
+                                    generator: generateUniqueRandomUKNationalInsuranceNumber,
+                                    mask: maskString
+                                },
+                                'UK Passport Number': {
+                                    matchStr: matchUKPassportNumberStr,
+                                    generator: generateUniqueRandomUKPassportNumber,
+                                    mask: maskString
+                                },
+                                'UK Postcode': {
+                                    matchStr: matchUKPostcodeStr,
+                                    generator: generateUniqueRandomUKPostcode,
+                                    mask: maskString
+                                },
+                                'UK SEDOL': {
+                                    matchStr: matchUKSEDOLStr,
+                                    generator: generateUniqueRandomUKSEDOL,
+                                    mask: maskString
+                                },
+                                'UK Sort Code': {
+                                    matchStr: matchUKSortCodeStr,
+                                    generator: generateUniqueRandomUKSortCode,
+                                    mask: maskString
+                                },
+                                'UK Unique Taxpayer Reference (UTR)': {
+                                    matchStr: matchUKUTRStr,
+                                    generator: generateUniqueRandomUKUTR,
+                                    mask: maskString
+                                },
+                                'US Driver License Number': {
+                                    matchStr: matchUSDriverLicenseNumberStr,
+                                    generator: generateUniqueRandomUSDriverLicenseNumber,
+                                    mask: maskString
+                                },
+                                'US Individual Taxpayer Identification Number (ITIN)': {
+                                    matchStr: matchUSITINStr,
+                                    generator: generateUniqueRandomUSITIN,
+                                    mask: maskString
+                                },
+                                'US Medicare Health Insurance Claim (HIC) Number': {
+                                    matchStr: matchUSMedicareHICNumberStr,
+                                    generator: generateUniqueRandomUSMedicareHICNumber,
+                                    mask: maskString
+                                },
+                                'US Passport Number': {
+                                    matchStr: matchUSPassportNumberStr,
+                                    generator: generateUniqueRandomUSPassportNumber,
+                                    mask: maskString
+                                },
+                                'US Social Security Number (SSN)': {
+                                    matchStr: matchUSSSNStr,
+                                    generator: generateUniqueRandomUSSSN,
+                                    mask: maskString
+                                },
+                                'US Social Security Number Randomization': {
+                                    matchStr: matchUSSSNRandomizationStr,
+                                    generator: generateUniqueRandomUSSSNRandomization,
+                                    mask: maskString
+                                },
+                                'US Vehicle Identification Number (VIN)': {
+                                    matchStr: matchUSVINStr,
+                                    generator: generateUniqueRandomUSVIN,
+                                    mask: maskString
+                                },
+                                'US Zip Code': {
+                                    matchStr: matchUSZipCodeStr,
+                                    generator: generateUniqueRandomUSZipCode,
+                                    mask: maskString
+                                },
+                                'China TIN': {
+                                    matchStr: matchChinaTINStr,
+                                    generator: generateUniqueRandomChinaTIN,
+                                    mask: maskString
+                                },
+                                'Japan SSN Code': {
+                                    matchStr: matchJapanSSNStr,
+                                    generator: generateUniqueRandomJapanSSN,
+                                    mask: maskString
+                                },
+                                'Korea RRN': {
+                                    matchStr: matchKoreaRRNStr,
+                                    generator: generateUniqueRandomKoreaRRN,
+                                    mask: maskString
+                                },
+                                'New Zealand IRD': {
+                                    matchStr: matchIRDStr,
+                                    generator: generateUniqueRandomIRD,
+                                    mask: maskString
+                                },
+                                'Philippines SSS': {
+                                    matchStr: matchSSSStr,
+                                    generator: generateUniqueRandomSSS,
+                                    mask: maskString
+                                },
+                                'Belgium INSZ/NISS': {
+                                    matchStr: matchINSZStr,
+                                    generator: generateUniqueRandomINSZ,
+                                    mask: maskString
+                                },
+                                'Germany StNr': {
+                                    matchStr: matchStNrStr,
+                                    generator: generateUniqueRandomStNr,
+                                    mask: maskString
+                                },
+                                'France NIR': {
+                                    matchStr: matchNIRStr,
+                                    generator: generateUniqueRandomNIR,
+                                    mask: maskString
+                                },
+                                'Italy Codice Fiscale': {
+                                    matchStr: matchCodiceFiscaleStr,
+                                    generator: generateUniqueRandomCodiceFiscale,
+                                    mask: maskString
+                                },
+                                'Netherlands BSN': {
+                                    matchStr: matchBSNStr,
+                                    generator: generateUniqueRandomBSN,
+                                    mask: maskString
+                                },
+                                'Portugal NISS': {
+                                    matchStr: matchNISSStr,
+                                    generator: generateUniqueRandomNISS,
+                                    mask: maskString
+                                },
+                                'Russia INN': {
+                                    matchStr: matchINNStr,
+                                    generator: generateUniqueRandomINN,
+                                    mask: maskString
+                                },
+                                'Spain NUSS': {
+                                    matchStr: matchNUSSStr,
+                                    generator: generateUniqueRandomNUSS,
+                                    mask: maskString
+                                },
+                                'Ukraine INPP': {
+                                    matchStr: matchINPPStr,
+                                    generator: generateUniqueRandomINPP,
+                                    mask: maskString
+                                },
+                                'Brazil CPF': {
+                                    matchStr: matchCPFStr,
+                                    generator: generateUniqueRandomCPF,
+                                    mask: maskString
+                                }
+                            };
+
+                            enabledFunctions.forEach(func => {
+                                if (functionMapping[func]) {
+                                    const {
+                                        matchStr,
+                                        generator,
+                                        mask
+                                    } = functionMapping[func];
+                                    handleMatches(matchStr, blockMode, generator, mask, func);
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error retrieving enabled functions:', error);
+                        });
+
 
 
                     if (matchSecretTokenStr && matchSecretTokenStr.length > 0) {
@@ -2429,10 +3093,10 @@ function startInterval() {
 
 
 
-                // end if
+                    // end if
                 }
 
-            }));//debounce end
+            })); //debounce end
 
 
         } else {
@@ -2441,7 +3105,7 @@ function startInterval() {
             textarea = document.querySelector("#prompt-textarea");
         }
 
-    }, 4000);//intervalId end
+    }, 4000); //intervalId end
 
 }
 //end

@@ -7,10 +7,7 @@
   <link rel="stylesheet" type="text/css" href="popup.css">
   <script src="jquery-3.6.0.min.js"></script>
   <script src="popup.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Space+Grotesk:700|Space+Grotesk:400,700&display=swap"
-    rel="stylesheet" />
-
-
+  <link href="https://fonts.googleapis.com/css?family=Space+Grotesk:700|Space+Grotesk:400,700&display=swap" rel="stylesheet"/>
 </head>
 <body>
   <div class="container">
@@ -24,18 +21,24 @@
     <div id="word">
       <p></p>
     </div>
-
+      <div id="functions-list">
+        <hr>
+        <h2>Manage Sensitive Data Types</h2><br>
+        
+      </div>    
     <div id="settingsContent" class="content">
       <hr> 
       <label>
         <input type="checkbox" id="blockCheckbox"> Block Mode <br><br>
-        <p class="note">* Detects Sensitive Information and automatically bring up a warning screen for the user. </p>
+        <p class="note">* Detects Sensitive Information and automatically brings up a warning screen for the user.</p>
         <input type="checkbox" id="pluginCheckbox"> Plugin Guard (Experimental) <br><br>
         <p class="note" style="color: red;">* This feature is currently disabled.</p>
         <hr>      
         <input type="checkbox" id="syntheticCheckbox"> Synthetic Data Mode (Experimental) <br><br>
         <p class="note">* Synthetic data is information that's artificially generated rather than produced by real-world events. e.g. test@example.com -> ATrdnPpS@PSI1ZF.com </p>   
       </label>
+      <hr>
+
     </div>
   </div>
 </body>
