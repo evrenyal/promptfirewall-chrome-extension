@@ -4,6 +4,7 @@ const usedEmails = new Set();
 const usedIBANCodes = new Set();
 const usedIPAddresses = new Set();
 const usedPhoneNumbers = new Set();
+const usedWords = new Set();
 
 const DEBUG_MODE = false;
 
@@ -16,8 +17,6 @@ function debug(label, data) {
 }
 
 window.onload = function() {
-
-
 
     if (localStorage.getItem('reloaded') === 'true') {
 
@@ -65,7 +64,6 @@ function maskStringEmail(str) {
 
     return "****" + str.substring(4);
 }
-
 
 function generateUniqueRandomCreditCard() {
     const cardTypes = ['amex', 'visa', 'mastercard', 'discover'];
@@ -1297,6 +1295,26 @@ function generateUniqueRandomCPF() {
     return `${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}.${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}.${getRandomDigit()}${getRandomDigit()}${getRandomDigit()}-${getRandomDigit()}${getRandomDigit()}`;
 }
 
+function generateUniqueRandomWord() {
+    const characters = 'abcdefghijklmnopqrstuvwxyz'; 
+    const wordLength = Math.floor(Math.random() * 8) + 3;  
+    let randomWord = '';
+
+    for (let i = 0; i < wordLength; i++) {
+        randomWord += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    if (!usedWords.has(randomWord)) {
+        usedWords.add(randomWord); 
+        return randomWord; 
+    } else {
+
+        return generateUniqueRandomWord();
+    }
+}
+
+debug("Random Words:", generateUniqueRandomCreditCard());
+
 debug("Random Credit Card Number:", generateUniqueRandomCreditCard());
 debug("Random Crypto Address:", generateUniqueRandomCryptoAddress());
 debug("Random Email Address:", generateUniqueRandomEmail());
@@ -1380,6 +1398,10 @@ debug("Random Ukraine INPP:", generateUniqueRandomINPP());
 debug("Random Brazil CPF:", generateUniqueRandomCPF());
 
 function matchCreditCardNumbers(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(?:\d{4}[ -]?){3}(?=\d{4}\b)(?:\d{4})|3[47][0-9]{2}([ -]?)([0-9]{6}\1[0-9]{5})\b/g;
 
     const matches = text.match(regex);
@@ -1389,6 +1411,10 @@ function matchCreditCardNumbers(text) {
 }
 
 function matchCryptoAddresses(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}\b/g;
 
     const matches = text.match(regex);
@@ -1399,6 +1425,10 @@ function matchCryptoAddresses(text) {
 
 
 function matchEmailAddresses(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/g;
 
     const matches = text.match(regex);
@@ -1409,6 +1439,10 @@ function matchEmailAddresses(text) {
 }
 
 function matchIBANCodes(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(?:(?:CR|DE|ME|RS|VA)\d{20}|(?:CZ|ES|SE|SK|TN)\d{22}|(?:DK|FI|FO|GL|SD)\d{16}|(?:AT|BA|EE|LT|XK)\d{18}|(?:AE|IL|TL)\d{21}|(?:LY|PT|ST)\d{23}|(?:IT|SM)\d{2}[A-Z]\d{10}[A-Za-z0-9]{12}|(?:HU|PL)\d{26}|(?:AL|CY)\d{10}[A-Za-z0-9]{16}|(?:CH|LI)\d{7}[A-Za-z0-9]{12}|(?:FR|MC)\d{12}[A-Za-z0-9]{11}\d{2}|(?:GB|IE)\d{2}[A-Z]{4}\d{14}|(?:KZ|LU)\d{5}[A-Za-z0-9]{13}|(?:GI|IQ)\d{2}[A-Z]{4}[A-Za-z0-9]{15}|(?:PK|RO)\d{2}[A-Z]{4}[A-Za-z0-9]{16}|(?:PS|QA)\d{2}[A-Z]{4}[A-Za-z0-9]{21}|AD\d{10}[A-Za-z0-9]{12}|AZ\d{2}[A-Z]{4}[A-Za-z0-9]{20}|BE\d{14}|BG\d{2}[A-Z]{4}\d{6}[A-Za-z0-9]{8}|BH\d{2}[A-Z]{4}[A-Za-z0-9]{14}|BR\d{25}[A-Z][A-Za-z0-9]|BY\d{2}[A-Za-z0-9]{4}\d{4}[A-Za-z0-9]{16}|DO\d{2}[A-Za-z0-9]{4}\d{20}|EG\d{27}|GE\d{2}[A-Z]\d{16}|GT\d{2}[A-Za-z0-9]{24}|GR\d{9}[A-Za-z0-9]{16}|HR\d{19}|IS\d{24}|JO\d{2}[A-Z]{4}\d{4}[A-Za-z0-9]{18}|KW\d{2}[A-Z]{4}[A-Za-z0-9]{22}|LC\d{2}[A-Z]{4}[A-Za-z0-9]{24}|LB\d{6}[A-Za-z0-9]{20}|LV\d{2}[A-Z]{4}\d{13}|MD\d{2}[A-Za-z0-9]{20}|MK\d{5}[A-Za-z0-9]{10}\d{2}|MR\d{25}|MT\d{2}[A-Z]{4}\d{5}[A-Za-z0-9]{18}|MU\d{2}[A-Z]{4}\d{19}[A-Z]{3}|NL\d{2}[A-Z]{4}\d{10}|NO\d{13}|SA\d{4}[A-Za-z0-9]{18}|SC\d{2}[A-Z]{4}\d{20}[A-Z]{3}|SI\d{17}|SV\d{2}[A-Z]{4}\d{20}|TR\d{8}[A-Za-z0-9]{16}|UA\d{8}[A-Za-z0-9]{19}|VG\d{2}[A-Z]{4}\d{16}|GE\d{2}[A-Z]{2}\d{16})\b/g;
     const matches = text.match(regex);
     //debug("matchIBANCodes:",matches); 
@@ -1418,6 +1452,10 @@ function matchIBANCodes(text) {
 }
 
 function matchIPAddresses(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(?:\d{1,3}\.){3}\d{1,3}\b/g;
 
     const matches = text.match(regex);
@@ -1428,6 +1466,11 @@ function matchIPAddresses(text) {
 
 //https://regex101.com/r/DsaRfI/1
 function matchPhoneNumbers(text) {
+
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b/g;
 
     const matches = text.match(regex);
@@ -1437,6 +1480,10 @@ function matchPhoneNumbers(text) {
 }
 
 function matchSecretToken(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}/gm,
         /ghp_[a-zA-Z0-9]{36}/gm,
@@ -1462,6 +1509,10 @@ function matchSecretToken(text) {
 
 // American Banker Association routing transit numbers (ABA RTN)
 function matchABARTN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b((0[0-9])|(1[0-2])|(2[1-9])|(3[0-2])|(6[1-9])|(7[0-2])|80)([0-9]{7})\b/g;
     const matches = text.match(regex);
 
@@ -1470,6 +1521,10 @@ function matchABARTN(text) {
 
 // Australian Business Number
 function matchAustralianBusinessNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{2}\.\d{3}\.\d{3}\.\d{3}\b/g,
         /\b\d{2}-\d{3}-\d{3}-\d{3}\b/g,
@@ -1481,6 +1536,10 @@ function matchAustralianBusinessNumber(text) {
 
 // Australian Company Number
 function matchAustralianCompanyNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{3}\.\d{3}\.\d{3}\b/g,
         /\b\d{3}-\d{3}-\d{3}\b/g,
@@ -1492,6 +1551,10 @@ function matchAustralianCompanyNumber(text) {
 
 // Australian Drivers License Patterns
 function matchAustralianDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{8,10}\b/g,
         /\b[0-9]{3} [0-9]{3} [0-9]{3}\b/g,
@@ -1504,6 +1567,10 @@ function matchAustralianDriversLicense(text) {
 
 // Australian Full National Number (FNN)
 function matchAustralianFullNationalNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b(0[2378]|\(0[2378]\)|\+61[2378]) ?\d{4}[- ]?\d{4}\b/g,
         /\b04\d{2}-\d{3}-\d{3}\b/g,
@@ -1516,6 +1583,10 @@ function matchAustralianFullNationalNumber(text) {
 
 // Australian Medicare card number
 function matchAustralianMedicareCardNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{4}-\d{5}-\d\b/g,
         /\b\d{4} \d{5} \d\b/g,
@@ -1526,18 +1597,30 @@ function matchAustralianMedicareCardNumber(text) {
 
 // Australian NSW Drivers License Pattern
 function matchAustralianNSWDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{8}\b/g;
     return text.match(regex);
 }
 
 // Australian Queensland Drivers License Pattern
 function matchAustralianQLDDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b0[0-9]{7}\b/g;
     return text.match(regex);
 }
 
 // Australian Tax File Number
 function matchAustralianTaxFileNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{9}\b/g,
         /\b[0-9]{3} [0-9]{3} [0-9]{3}\b/g,
@@ -1548,30 +1631,50 @@ function matchAustralianTaxFileNumber(text) {
 
 // Austrian Bank Account Numbers
 function matchAustrianBankAccountNumbers(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{16}\b/g;
     return text.match(regex);
 }
 
 // Austrian Passport Number
 function matchAustrianPassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Za-z] ?\d{7}\b/g;
     return text.match(regex);
 }
 
 // Austrian Social Security Insurance Number
 function matchAustrianSocialSecurityInsuranceNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[1-9][0-9]{3} ?[0-9]{2} ?[0-9]{2} ?[0-9]{2}\b/g;
     return text.match(regex);
 }
 
 // Austrian VAT Identification Number (UID)
 function matchAustrianVATNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\bU[0-9]{8}\b/g;
     return text.match(regex);
 }
 
 // Canadian Alberta Drivers License Pattern
 function matchCanadianAlbertaDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{6} [0-9]{3}\b/g,
         /\b[0-9]{6}-[0-9]{3}\b/g,
@@ -1582,6 +1685,10 @@ function matchCanadianAlbertaDriversLicense(text) {
 
 // Canadian Alberta Health Pattern
 function matchCanadianAlbertaHealth(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{5} [0-9]{4}\b/g,
         /\b[0-9]{5}-[0-9]{4}\b/g,
@@ -1592,18 +1699,30 @@ function matchCanadianAlbertaHealth(text) {
 
 // Canadian Manitoba Drivers License Pattern
 function matchCanadianManitobaDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{9}\b/g;
     return text.match(regex);
 }
 
 // Canadian Manitoba Health Pattern
 function matchCanadianManitobaHealth(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{7}\b/g;
     return text.match(regex);
 }
 
 // Canadian Ontario Drivers License Pattern
 function matchCanadianOntarioDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-Z][0-9]{4} [0-9]{5} [0-9]{5}\b/g,
         /\b[A-Z][0-9]{4}-[0-9]{5}-[0-9]{5}\b/g,
@@ -1614,6 +1733,10 @@ function matchCanadianOntarioDriversLicense(text) {
 
 // Canadian Ontario Health Pattern
 function matchCanadianOntarioHealth(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{4} [0-9]{3} [0-9]{3}[A-Z]?\b/g,
         /\b[0-9]{4}-[0-9]{3}-[0-9]{3}[A-Z]?\b/g,
@@ -1624,6 +1747,10 @@ function matchCanadianOntarioHealth(text) {
 
 // Canadian Passport Pattern
 function matchCanadianPassport(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\bAT[0-9]{2} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}\b/g,
         /\bAT[0-9]{18}\b/g
@@ -1633,6 +1760,10 @@ function matchCanadianPassport(text) {
 
 // Canadian Quebec Drivers License Pattern
 function matchCanadianQuebecDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-Z][0-9]{4} [0-9]{6} [0-9]{2}\b/g,
         /\b[A-Z][0-9]{4}-[0-9]{6}-[0-9]{2}\b/g,
@@ -1643,6 +1774,10 @@ function matchCanadianQuebecDriversLicense(text) {
 
 // Canadian Quebec Health Pattern
 function matchCanadianQuebecHealth(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-Z]{4} [0-9]{4} [0-9]{4}\b/g,
         /\b[A-Z]{4}[0-9]{8}\b/g
@@ -1652,12 +1787,20 @@ function matchCanadianQuebecHealth(text) {
 
 // Canadian Saskatchewan Drivers License Pattern
 function matchCanadianSaskatchewanDriversLicense(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{8}\b/g;
     return text.match(regex);
 }
 
 // Canadian Social Insurance Number
 function matchCanadianSocialInsuranceNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[1-79][0-9]{8}\b/g,
         /\b[1-79][0-9]{2} [0-9]{3} [0-9]{3}\b/g,
@@ -1668,6 +1811,10 @@ function matchCanadianSocialInsuranceNumber(text) {
 
 // Date (Multiple Formats)
 function matchDateFormats(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[01])\/[0-9]{2,4}\b/g,
         /\b(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[01])\.[0-9]{2,4}\b/g,
@@ -1684,16 +1831,22 @@ function matchDateFormats(text) {
     return matches;
 }
 
-
-
 // France Drivers License Number
 function matchFranceDriversLicenseNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|1[0-9]|2A|2a|2B|2b|2[1-9]|[3-8][0-9]|9[0-5])[0-9]{6}\b/g;
     return text.match(regex);
 }
 
 // France Passport Number
 function matchFrancePassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{2}[a-z]{2}[0-9]{5}\b/g,
         /\b[0-9]{2}[A-Z]{2}[0-9]{5}\b/g
@@ -1703,6 +1856,10 @@ function matchFrancePassportNumber(text) {
 
 // France Value Added Tax (VAT) Number
 function matchFranceVATNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{11}\b/g,
         /\b[a-hA-Hj-nJ-Np-zP-Z][0-9]{10}\b/g,
@@ -1715,6 +1872,10 @@ function matchFranceVATNumber(text) {
 
 // French INSEE Code
 function matchFrenchINSEECode(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[1-478][0-9]{2}(0[1-9]|1[0-2]|[2-9][0-9])(([013-9][0-9]|2[AB1-9])[0-9]{3})[0-9]{5}\b/g,
         /\b[1-478] [0-9]{2} (0[1-9]|1[0-2]|[2-9][0-9]) ((([013-9][0-9]|2[AB1-9]) ?[0-9]{3})|([0-9]{3} ?[0-9]{2})) [0-9]{3} ?[0-9]{2}\b/g,
@@ -1725,12 +1886,20 @@ function matchFrenchINSEECode(text) {
 
 // German Driver's License Number
 function matchGermanDriversLicenseNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9A-Z][0-9]{2}[0-9A-Z]{6}[0-9][0-9A-Z]\b/g;
     return text.match(regex);
 }
 
 // German ID Number
 function matchGermanIDNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9A-Z]{9}[0-9]D?[ -]?[0-9]{6}[0-9][ -MF]?[0-9]{6}[0-9][ -]?[0-9]\b/g,
         /\b[0-9A-Z]{9}[0-9]D?\b/g
@@ -1740,12 +1909,20 @@ function matchGermanIDNumber(text) {
 
 // German Passport Number
 function matchGermanPassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[CF-HJ-NPRTV-Z0-9]{9}[0-9]?D?\b/g;
     return text.match(regex);
 }
 
 // German Social Security Number
 function matchGermanSocialSecurityNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{2}(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])[0-9]{2}[A-Z][0-9]{3}\b/g,
         /\b[0-9]{2} (0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])[0-9]{2} [A-Z] [0-9]{2} ?[0-9]\b/g,
@@ -1757,6 +1934,10 @@ function matchGermanSocialSecurityNumber(text) {
 
 // German Tax Identifier/Code
 function matchGermanTaxIdentifier(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[1-9][0-9]{8}\b/g,
         /\b[1-9][0-9]{2}\/?[0-9]{4}\/?[0-9]{4}\b/g
@@ -1766,6 +1947,10 @@ function matchGermanTaxIdentifier(text) {
 
 // Indian Aadhaar Number
 function matchIndianAadhaarNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[2-9][0-9]{11}\b/g,
         /\b[2-9][0-9]{3} [0-9]{4} [0-9]{4}\b/g
@@ -1775,48 +1960,80 @@ function matchIndianAadhaarNumber(text) {
 
 // Indian PAN
 function matchIndianPAN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Za-z]{3}[CPHFATBLJGcpfatbljg][A-Za-z]\d{4}[A-Za-z]\b/g;
     return text.match(regex);
 }
 
 // Italian Passport Number
 function matchItalianPassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Z0-9]{2}[0-9]{7}\b/g;
     return text.match(regex);
 }
 
 // Italian Tax ID/SSN (Codice Fiscale)
 function matchItalianTaxID(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Z]{3}[ -]?[A-Z]{3}[ -]?[0-9]{2}[A-EHLMPRST](?:[04][1-9]|[1256][0-9]|[37][01])[ -]?[A-MZ][0-9]{3}[A-Z]\b/g;
     return text.match(regex);
 }
 
 // Turkish Identification Number
 function matchTurkishID(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[1-9][0-9]{10}\b/g;
     return text.match(regex);
 }
 
 // UK BIC Number
 function matchUKBICNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b([A-Z]{4}GB[0-9A-Z]{2}[0-9A-Z]{3})\b/g;
     return text.match(regex);
 }
 
 // UK Driver License Number
 function matchUKDriverLicenseNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Z0-9]{5}\d[0156]\d([0][1-9]|[12]\d|3[01])\d[A-Z0-9]{3}[A-Z]{2}\b/g;
     return text.match(regex);
 }
 
 // UK Electoral Roll Number
 function matchUKElectoralRollNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[A-Z]{2,3}\d{1,4}\b/g;
     return text.match(regex);
 }
 
 // UK IBAN Number
 function matchUKIBANNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\bGB[0-9]{2} [A-Z]{4} [0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2}\b/g,
         /\bGB[0-9]{2}[A-Z]{4}[0-9]{14}\b/g
@@ -1826,6 +2043,10 @@ function matchUKIBANNumber(text) {
 
 // UK National Health Service (NHS) Number
 function matchUKNHSNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}[0-9]{6}[A-DFM]{0,1}\b/g,
         /\b\d{3}\.\d{3}\.\d{4}\b/g,
@@ -1838,6 +2059,10 @@ function matchUKNHSNumber(text) {
 
 // UK National Insurance Number
 function matchUKNationalInsuranceNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[AEKLHTY][ABEHKLMPRSTWXYZ]\d{6}[A-D]\b/g,
         /\bB[ABEHKLMT]\d{6}[A-D]\b/g,
@@ -1858,12 +2083,20 @@ function matchUKNationalInsuranceNumber(text) {
 
 // UK Passport Number
 function matchUKPassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{9}\b/g;
     return text.match(regex);
 }
 
 // UK Postcode
 function matchUKPostcode(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b(GIR 0AA)\b/g,
         /\b[A-Z][0-9]{1,2} ?[0-9][A-Z]{2}\b/g,
@@ -1876,18 +2109,30 @@ function matchUKPostcode(text) {
 
 // UK SEDOL
 function matchUKSEDOL(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[B-DF-HJ-NP-TV-XYZ0-9]{6}[0-9]\b/g;
     return text.match(regex);
 }
 
 // UK Sort Code
 function matchUKSortCode(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(\d{2}-\d{2}-\d{2})\b/g;
     return text.match(regex);
 }
 
 // UK Unique Taxpayer Reference (UTR)
 function matchUKUTR(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{5} \d{5}\b/g,
         /\b\d{10}\b/g
@@ -1897,6 +2142,10 @@ function matchUKUTR(text) {
 
 // US Driver License Number
 function matchUSDriverLicenseNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{7}\b/g,
         /\b[A-Z][0-9]{8}\b/g,
@@ -1940,6 +2189,10 @@ function matchUSDriverLicenseNumber(text) {
 
 // US Individual Taxpayer Identification Number (ITIN)
 function matchUSITIN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{9}\b/,
         /\b\d{3}-\d{2}-\d{4}\b/,
@@ -1951,6 +2204,10 @@ function matchUSITIN(text) {
 
 // US Medicare Health Insurance Claim (HIC) Number
 function matchUSMedicareHICNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-Z]{0,3}[0-9]{9}[0-9A-Z]{1,3}\b/g,
         /\b[A-Z]{0,3}[0-9]{3} [0-9]{6}[0-9A-Z]{1,3}\b/g,
@@ -1962,6 +2219,10 @@ function matchUSMedicareHICNumber(text) {
 
 // US Passport Number
 function matchUSPassportNumber(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b\d{8}\b/g,
         /\b\d{9}\b/g
@@ -1972,6 +2233,10 @@ function matchUSPassportNumber(text) {
 // US Social Security Number (SSN)
 https: //regex101.com/r/kdXrYe/1
     function matchUSSSN(text) {
+        if (typeof text !== 'string') {
+            debug("Expected a string but received:", typeof text);
+            text = '';
+        }        
         const regexArray = [
             /(?!(\d){3}(-| |)\1{2}\2\1{4})(?!666|000|9\d{2})(\b\d{3}(-| |)(?!00)\d{2}\4(?!0{4})\d{4}\b)/g
         ];
@@ -1980,6 +2245,10 @@ https: //regex101.com/r/kdXrYe/1
 
 // US Social Security Number Randomization
 function matchUSSSNRandomization(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[0-9]{3}-[0-9]{2}-[0-9]{4}\b/g,
         /\b[0-9]{3} [0-9]{2} [0-9]{4}\b/g,
@@ -1990,6 +2259,10 @@ function matchUSSSNRandomization(text) {
 
 // US Vehicle Identification Number (VIN)
 function matchUSVIN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regexArray = [
         /\b[A-HJ-NPR-Z0-9]{3}-[A-HJ-NPR-Z0-9]{5}-[A-HJ-NPR-Z0-9]{1}-[A-HJ-NPR-Z0-9]{8}\b/g,
         /\b[A-HJ-NPR-Z0-9]{17}\b/g
@@ -1999,30 +2272,50 @@ function matchUSVIN(text) {
 
 // US Zip Code
 function matchUSZipCode(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b[0-9]{5}(?:-[0-9]{4})?\b/g;
     return text.match(regex);
 }
 
 // China TIN
 function matchChinaTIN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{18}\b/g;
     return text.match(regex);
 }
 
 // Japan SSN
 function matchJapanSSN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{12}\b/g;
     return text.match(regex);
 }
 
 // Korea RRN
 function matchKoreaRRN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{13}\b/g;
     return text.match(regex);
 }
 
 // New Zealand IRD
 function matchIRD(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{3}-\d{3}-\d{3}\b/g;
     return text.match(regex);
 }
@@ -2030,36 +2323,60 @@ function matchIRD(text) {
 
 // Philippines SSS
 function matchSSS(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{2}-\d{7}-\d{1}\b/g;
     return text.match(regex);
 }
 
 // Belgium INSZ/NISS
 function matchINSZ(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{11}\b/g;
     return text.match(regex);
 }
 
 // Germany StNr
 function matchStNr(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{11}\b/g;
     return text.match(regex);
 }
 
 // France NIR
 function matchNIR(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{13}-\d{2}\b/g;
     return text.match(regex);
 }
 
 // Italy Codice Fiscale
 function matchCodiceFiscale(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{3}–\d{3}–\d{3}–\d{3}\b/g;
     return text.match(regex);
 }
 
 // Netherlands BSN
 function matchBSN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{9}\b/g;
     return text.match(regex);
 }
@@ -2067,35 +2384,59 @@ function matchBSN(text) {
 
 // Portugal NISS
 function matchNISS(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{11}\b/g;
     return text.match(regex);
 }
 
 // Russia INN
 function matchINN(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{3}-\d{3}-\d{3}[- ]\d{2}\b/g;
     return text.match(regex);
 }
 
 // Spain NUSS
 function matchNUSS(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b(\d\s*){12}\b/g;
     return text.match(regex);
 }
 
 // Ukraine INPP
 function matchINPP(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{10}\b/g;
     return text.match(regex);
 }
 
 // Brazil CPF
 function matchCPF(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/g;
     return text.match(regex);
 }
 
 function matchMarkdown(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
     const regex = /!\[.*?\]\(.*?\)/gm;
 
     const matches = text.match(regex);
@@ -2103,7 +2444,40 @@ function matchMarkdown(text) {
     return matches;
 }
 
+function optimizedLevenshtein(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+
+    let previous = Array(a.length + 1).fill(0).map((_, idx) => idx);
+    let current = Array(a.length + 1).fill(0);
+
+    for (let i = 1; i <= b.length; i++) {
+        current[0] = i;
+        for (let j = 1; j <= a.length; j++) {
+            if (b[i - 1] === a[j - 1]) {
+                current[j] = previous[j - 1];
+            } else {
+                current[j] = Math.min(
+                    previous[j - 1] + 1, 
+                    current[j - 1] + 1,  
+                    previous[j] + 1       
+                );
+            }
+        }
+
+        [previous, current] = [current, previous];
+    }
+
+    return previous[a.length];
+}
+
+
 function matchClosest(text) {
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }    
+
     const targets = [
         "ignore the",
         "ignore all",
@@ -2137,11 +2511,56 @@ function matchClosest(text) {
         "just append"
     ];
 
-    const regex = new RegExp(targets.map(s => s.replace(/ /g, '\\s+')).join('|'), 'i');
-    const matches = text.match(regex);
+    let closestMatch = null;
+    let lowestDistance = Infinity;
 
-    return matches;
+    targets.forEach(target => {
+        const distance = optimizedLevenshtein(text.toLowerCase(), target.toLowerCase());
+        if (distance < lowestDistance && distance < 6) {
+            lowestDistance = distance;
+            closestMatch = target;
+        }
+    });
+
+    if (lowestDistance < 6) {
+        debug("lowestDistance", lowestDistance);
+        return closestMatch;
+    } else {
+        return null;
+    }
 }
+
+
+let wordsList = [];
+
+function loadWords() {
+    chrome.runtime.sendMessage({ action: "fetchWords" }, function(response) {
+        if (response.words && response.words.length > 0) {
+            wordsList = response.words.map(wordObj => wordObj.word);
+            debug("Words loaded:", wordsList);
+        } else {
+            debug("No words found in the database.");
+        }
+    });
+}
+
+
+function checkForWords(text) {
+
+    if (typeof text !== 'string') {
+        debug("Expected a string but received:", typeof text);
+        text = '';
+    }
+
+    const matchedWords = wordsList.filter(word => text.includes(word));
+
+    if (matchedWords.length > 0) {
+        console.debug("Matched words:", matchedWords);
+    }
+
+    return matchedWords;
+}
+
 
 let isSendingData = false;
 
@@ -2153,7 +2572,7 @@ function sendDataWithRetry(retryCount = 0, callback) {
         action: 'addData'
     }, (response) => {
         if (chrome.runtime.lastError || (response && response.error)) {
-            console.error('Error:', chrome.runtime.lastError?.message || response.error);
+            debug('Error:', chrome.runtime.lastError?.message || response.error);
             if (retryCount < 3) {
                 setTimeout(() => sendDataWithRetry(retryCount + 1, callback), 1000);
             } else {
@@ -2161,7 +2580,7 @@ function sendDataWithRetry(retryCount = 0, callback) {
                 if (callback) callback();
             }
         } else {
-            console.log('Response received:', response);
+            debug('Response received:', response);
             isSendingData = false;
             if (callback) callback();
         }
@@ -2274,7 +2693,6 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
 
 let matchedParts = [];
-let currentTextareaValue;
 let matchedWords = [];
 let matchedWordsx = [];
 
@@ -2301,42 +2719,37 @@ function startInterval() {
     const intervalId = setInterval(() => {
 
         debug("setInterval", null);
-
+        debug("Load Words", null);
+        loadWords();
 
         textarea = document.querySelector("#prompt-textarea");
 
-        if (textarea) {
-            debug("Textarea found", null);
-
-
-            textarea.addEventListener('input', debounce(async (event) => {
+        if (textarea) {  
+        
+            ['input', 'paste'].forEach(eventtype => {
+            textarea.addEventListener(eventtype, debounce(async (event) => {
                 let lastPart = "";
+                let fullTextContent = textarea.textContent;
+                lastPart = fullTextContent;
 
-                if (event.inputType === 'insertFromPaste') {
+                if (eventtype === 'input' && event.inputType !== 'insertFromPaste') {
 
-                    lastPart = textarea.value;
+                    let words = fullTextContent.split(/\s+/);
+                    lastPart = words[words.length - 2];
 
-
-                } else {
-
-                    let userInput = "";
-
-                    if (event.target.value.endsWith(" ")) {
-                        userInput = event.target.value.trimEnd();
+                    if (lastPart) {
+                        debug("Last word added:", lastPart);
                     }
-                    debug("userInput", userInput);
 
-                    const parts = userInput.split(' ');
-
-                    lastPart = parts[parts.length - 1];
-                    debug("lastPart", lastPart);
-
+                    debug("Input event detected:", lastPart);
+                } else if (eventtype === 'paste') {
+                    lastPart = fullTextContent;
+                    debug("Paste event detected:", lastPart);
                 }
 
                 matchedWords = [];
                 matchedWordsx = [];
                 clearInterval(intervalId);
-
                 if (!isSendingData) {
 
                     function safeMatch(matchFunction, input) {
@@ -2344,6 +2757,8 @@ function startInterval() {
                         return (result && result.length > 0) ? result : null;
                     }
 
+                    const checkForWordsStr = safeMatch(checkForWords, lastPart);
+                    debug("checkForWordsStr", checkForWordsStr);
                     const matchPhoneNumbersStr = safeMatch(matchPhoneNumbers, lastPart);
                     debug("matchPhoneNumbersStr", matchPhoneNumbersStr);
                     const matchCryptoAddressesStr = safeMatch(matchCryptoAddresses, lastPart);
@@ -2591,7 +3006,8 @@ function startInterval() {
                         ((matchINNStr && matchINNStr.length > 0) ? matchINNStr.length : 0) +
                         ((matchNUSSStr && matchNUSSStr.length > 0) ? matchNUSSStr.length : 0) +
                         ((matchINPPStr && matchINPPStr.length > 0) ? matchINPPStr.length : 0) +
-                        ((matchCPFStr && matchCPFStr.length > 0) ? matchCPFStr.length : 0);
+                        ((matchCPFStr && matchCPFStr.length > 0) ? matchCPFStr.length : 0)+
+                        ((checkForWordsStr && checkForWordsStr.length > 0) ? checkForWordsStr.length : 0);
 
                     debug("cnt", cnt);
                     sendMultipleRequests(cnt, 10000);
@@ -2617,15 +3033,20 @@ function startInterval() {
                             matchedWordsx.push(_tmptype);
                             showPopup(event, matchedWordsx);
 
+
                         } else if (blockMode === "disabled") {
                             matches.forEach(match => {
-                                const randomValue = generateFunction();
-                                const regex = new RegExp(match.replace('+', '\\+'), 'g');
-                                textarea.value = textarea.value.replace(regex, randomValue);
+                                if (typeof match === 'string') {  
+                                    const randomValue = generateFunction();
+                                    const regex = new RegExp(match.replace('+', '\\+'), 'g');
+                                    debug("Replace", textarea.textContent);
+                                    textarea.textContent = textarea.textContent.replace(regex, randomValue);                            
+                                } else {
+                                    debug(`Invalid match: ${match}`);  
+                                }
                             });
                         }
 
-                        textarea.value += " ";
                     };
 
                     function getEnabledFunctions() {
@@ -2634,7 +3055,7 @@ function startInterval() {
                                 if (chrome.runtime.lastError) {
                                     reject(chrome.runtime.lastError);
                                 } else {
-                                    console.log('Retrieved enabled functions:', result.enabledFunctions);
+                                    debug('Retrieved enabled functions:', result.enabledFunctions);
                                     resolve(result.enabledFunctions);
                                 }
                             });
@@ -2644,9 +3065,14 @@ function startInterval() {
 
                     getEnabledFunctions()
                         .then(enabledFunctions => {
-                            console.log('Enabled functions:', enabledFunctions);
+                            debug('Enabled functions:', enabledFunctions);
 
                             const functionMapping = {
+                                'Words': {
+                                    matchStr: checkForWordsStr,
+                                    generator: generateUniqueRandomWord,
+                                    mask: maskString
+                                },                                
                                 'Phone Number': {
                                     matchStr: matchPhoneNumbersStr,
                                     generator: generateUniqueRandomPhoneNumber,
@@ -3051,8 +3477,15 @@ function startInterval() {
                                         generator,
                                         mask
                                     } = functionMapping[func];
-                                    handleMatches(matchStr, blockMode, generator, mask, func);
-                                }
+                                    if (matchStr) { 
+                                        handleMatches(matchStr, blockMode, generator, mask, func);
+                                    } else {
+                                        debug("No match string found for function");
+                                    }
+                                }  else {
+                                    
+                                    debug("No function mapping found");
+                                 }
                             });
                         })
                         .catch(error => {
@@ -3091,12 +3524,11 @@ function startInterval() {
                         textarea.value += " ";
                     }
 
-
-
-                    // end if
+                // end if
                 }
 
-            })); //debounce end
+            }, 300)); // 300 ms debounce delay
+            }); //debounce input paste event
 
 
         } else {
@@ -3151,7 +3583,7 @@ function createEl(tag, props = {}) {
 
 function showPopup(event, wordx) {
 
-
+    debug("word",wordx);
     popupContainer.style.display = 'flex';
     setTimeout(() => {
         popupContainer.style.opacity = '1';

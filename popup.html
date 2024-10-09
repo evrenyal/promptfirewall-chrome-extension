@@ -16,7 +16,9 @@
         <p>Prompt Firewall</p>
       </div>      
       <button id="home" class="active">Home</button>
+      <button id="wordsButton">Forbidden Words</button>
       <button id="settingsButton">Settings</button>
+      
     </div>
     <div id="word">
       <p></p>
@@ -24,7 +26,6 @@
       <div id="functions-list">
         <hr>
         <h2>Manage Sensitive Data Types</h2><br>
-        
       </div>    
     <div id="settingsContent" class="content">
       <hr> 
@@ -38,7 +39,21 @@
         <p class="note">* Synthetic data is information that's artificially generated rather than produced by real-world events. e.g. test@example.com -> ATrdnPpS@PSI1ZF.com </p>   
       </label>
       <hr>
-
+    </div>
+    <hr>
+    <div id="wordsContent" class="content">
+      <p>Encryption Key</p><br>
+        <label for="password"></label>
+        <input type="text" id="userInput" placeholder="Encryption Key">
+        <button id="save">Save</button>   
+        <p>Please save the encryption key before adding a word.</p>
+        <div id="message"></div>
+      <hr>
+      <p>Forbidden Words</p><br>
+      <input type="text" id="wordInput" placeholder="Enter word">
+      <button id="addButton">Add</button>
+      <ul id="lst"></ul>
+      <hr>
     </div>
   </div>
 </body>

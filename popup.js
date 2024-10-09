@@ -10,8 +10,108 @@ $(document).ready(function() {
         }
     }
 
+    function containsEntitiesOrUnicode(input) {
+        const htmlEntityPattern = /&#[0-9]+;|&#x[0-9A-Fa-f]+;|&[a-zA-Z]+;/g;
+        const unicodePattern = /%[0-9A-Fa-f]{2}/g;
+
+        return htmlEntityPattern.test(input) || unicodePattern.test(input);
+    }
+
+    function removeXSSCharacters(input) {
+        return input.replace(/[&<>"'/]/g, '');
+    }
+
+    function sanitizeInput(input) {
+        if (containsEntitiesOrUnicode(input)) {
+            return "Invalid input: contains HTML entities or Unicode characters";
+        }
+
+        return removeXSSCharacters(input);
+    }    
+
+    document.getElementById('save').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        const messageElement = document.getElementById('message');
+
+        if (!userInput) {
+            messageElement.textContent = 'Input cannot be empty. Please enter a valid key.';
+            messageElement.style.color = 'red';
+            return;
+        }
+
+        chrome.storage.local.set({ savedData: userInput }, function() {
+            if (chrome.runtime.lastError) {
+                messageElement.textContent = `Error: ${chrome.runtime.lastError.message}`;
+                messageElement.style.color = 'red';
+                console.error('Data could not be saved:', chrome.runtime.lastError);
+            } else {
+                messageElement.textContent = 'Encryption Key successfully added!';
+                messageElement.style.color = 'green'; 
+                console.log('Data has been saved:', userInput);
+            }
+        });
+    });
+
 
     async function fetchDataAndShowData() {
+
+        var wordsButton = $('#wordsButton'); 
+        var wordsContent = $('#wordsContent'); 
+        var wordInput = $('#wordInput');
+        var addButton = $('#addButton');
+        var lst = $('#lst');
+
+    function loadWords() {
+        chrome.runtime.sendMessage({ action: "fetchWords" }, function(response) {
+            if (response.words && response.words.length > 0) {
+                response.words.forEach(function(word) {
+                    lst.append('<li>' + word.word + ' <button class="deleteWord" data-id="' + word.id + '">Delete</button></li>');
+                });
+            }
+        });
+    }
+
+    addButton.on('click', function() {
+        var word = sanitizeInput(wordInput.val());
+        if (word) {
+            chrome.runtime.sendMessage({ action: "addWord", word: word }, function(response) {
+                if (response.message === "Word successfully added") {
+
+                    chrome.runtime.sendMessage({ action: "fetchWords" }, function(response) {
+                        if (response.words && response.words.length > 0) {
+                            var lastAddedWord = response.words[response.words.length - 1];
+                            lst.append('<li>' + lastAddedWord.word + ' <button class="deleteWord" data-id="' + lastAddedWord.id + '">Delete</button></li>');
+                        }
+                    });
+                    wordInput.val(''); 
+                }
+            });
+        }
+    });
+
+    lst.on('click', '.deleteWord', function() {
+        var id = $(this).data('id');
+        var listItem = $(this).parent();
+        chrome.runtime.sendMessage({ action: "deleteWord", id: id }, function(response) {
+            if (response.message === "Word successfully deleted") {
+                listItem.remove(); 
+            }
+        });
+    });
+
+    wordsButton.on('click', function() {
+        wordsButton.addClass('active');
+        home.removeClass('active');
+        settingsButton.removeClass('active');
+        $('#functions-list').hide();
+        settingsContent.removeClass('active');
+        wordsContent.addClass('active');
+    });
+
+    loadWords();
+
+        //end words
+        
         var wordsList = $('#word');
 
         if (!wordsList.length) {
@@ -62,27 +162,42 @@ $(document).ready(function() {
     }, 500);
 
 
-
     var home = $('#home');
     var settingsButton = $('#settingsButton');
     var settingsContent = $('#settingsContent');
     var wordsList = $('#wordsList');
     var blockCheckbox = $('#blockCheckbox');
     var monitorCheckbox = $('#monitorCheckbox');
+    var wordsContent = $('#wordsContent');
+    var wordsButton = $('#wordsButton');
 
     home.on('click', function() {
         home.addClass('active');
         settingsButton.removeClass('active');
         settingsContent.removeClass('active');
-        $('#functions-list').show();
+        wordsButton.removeClass('active');
+        $('#functions-list').show(); 
+        $('#wordsContent').hide(); 
     });
 
     settingsButton.on('click', function() {
         settingsButton.addClass('active');
         home.removeClass('active');
-        $('#functions-list').hide();
-        settingsContent.addClass('active');
+        wordsButton.removeClass('active');
+        $('#functions-list').hide(); 
+        settingsContent.addClass('active'); 
+        $('#wordsContent').hide(); 
     });
+
+    wordsButton.on('click', function() {
+        wordsButton.addClass('active');
+        home.removeClass('active');
+        settingsButton.removeClass('active');
+        $('#functions-list').hide();  
+        settingsContent.removeClass('active'); 
+        $('#wordsContent').show();  
+    });
+
 
     var blockStatus = null;
     var pluginStatus = null;
@@ -239,11 +354,11 @@ $(document).ready(function() {
     //begin
 
     const defaultEnabledFunctions = [
-        "Phone Number", "Credit Card Number", "Crypto Addresses", "Email Address", "IBAN Codes", "IP Addresses"
+        "Words","Phone Number", "Credit Card Number", "Crypto Addresses", "Email Address", "IBAN Codes", "IP Addresses"
     ];
 
     const functions = [
-        "Phone Number", "Credit Card Number", "Crypto Addresses", "Email Address", "IBAN Codes", "IP Addresses",
+        "Words", "Phone Number", "Credit Card Number", "Crypto Addresses", "Email Address", "IBAN Codes", "IP Addresses",
         "ABA RTN", "Australian Business Number", "Australian Company Number", "Australian Drivers License",
         "Australian Full National Number (FNN)", "Australian Medicare card number", "Australian NSW Drivers License Pattern",
         "Australian Queensland Drivers License Pattern", "Australian Tax File Number", "Austrian Bank Account Numbers",
@@ -335,5 +450,5 @@ $(document).ready(function() {
 
 
 
-    //end
+//end
 });
