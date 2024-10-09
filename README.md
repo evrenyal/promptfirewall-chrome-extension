@@ -1,4 +1,4 @@
-# Prompt Firewall Chrome Extension v0.0.11
+# Prompt Firewall Chrome Extension v0.0.14
 
 ## Overview
 
