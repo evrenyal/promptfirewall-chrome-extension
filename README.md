@@ -2,7 +2,7 @@
 
 ## Overview
 
-Enhance your digital security with the Prompt Firewall, a cutting-edge Chrome extension designed to protect your sensitive personal information. Tailored for both individual and business use, this extension is especially effective when interacting with Large Language Models like ChatGPT.
+Enhance your digital security with the Prompt Firewall, a cutting-edge Chrome extension designed to protect your sensitive personal information. Tailored for both individual and business use, this extension is especially effective when interacting with Large Language Models like ChatGPT and DeepSeek.
 
 ## Features
 
