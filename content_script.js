@@ -2722,7 +2722,17 @@ function startInterval() {
         debug("Load Words", null);
         loadWords();
 
-        textarea = document.querySelector("#prompt-textarea");
+        let textarea;
+
+        const promptTextarea = document.querySelector("#prompt-textarea"); //chatgpt
+        const chatInput = document.querySelector("#chat-input"); //deepseek
+
+        if (chatInput && chatInput.value.trim()) {
+          textarea = chatInput; 
+        } else if (promptTextarea) {
+          textarea = promptTextarea; 
+        }
+
 
         if (textarea) {  
         

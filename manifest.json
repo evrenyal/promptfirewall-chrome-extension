@@ -1,14 +1,15 @@
 {
-  "name": "Prompt Firewall: ChatGPT Data Leak Prevention",
-  "description": "ChatGPT Data Leak Prevention (DLP) : Safeguard Sensitive Information and Protect Your Privacy",
-  "version": "0.0.14",
+  "name": "Prompt Firewall: LLM Data Leak Prevention",
+  "description": "LLM Data Leak Prevention (DLP) : Safeguard Sensitive Information and Protect Your Privacy",
+  "version": "0.0.15",
   "permissions": [
     "storage",
     "activeTab"
   ],
   "host_permissions": [
     "https://chat.openai.com/*",
-    "https://chatgpt.com/*"
+    "https://chatgpt.com/*",
+    "https://chat.deepseek.com/*"
   ],
   "manifest_version": 3,
   "action": {
@@ -24,7 +25,8 @@
     {
       "matches": [
         "https://chat.openai.com/*",
-        "https://chatgpt.com/*"
+        "https://chatgpt.com/*",
+        "https://chat.deepseek.com/*"
       ],
       "js": [
         "content_script.js"
